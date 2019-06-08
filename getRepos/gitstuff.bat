@@ -1,18 +1,20 @@
 @echo off 
 SETLOCAL EnableDelayedExpansion 
  
-::########################################################### 
-::#               											# 
-::# Filename:  getLoma.bat         							# 
-::#               											# 
-::# Description:  Configures the LOMA dev env for SW ENG 	# 
-::#               											# 
-::# History:            									# 
-::#               											# 
-::# Date  		Note       			SW ENG  				# 
-::# 20190522 	Initial Release     BMD   					# 
-::#               											# 
-::########################################################### 
+::################################################################################### 
+::#               																	# 
+::# Filename:  getLoma.bat         													# 
+::#               																	# 
+::# Description:  Configures the LOMA dev env for SW ENG 							# 
+::#               																	# 
+::# History:            															# 
+::#               																	# 
+::# Date  		Note       										SW ENG  			# 
+::# 20190522 	Initial Release     							BMD  				#
+::# 20190608	Initial review of script before mods executed 	NGW					# 
+::# 20190608	File Mod after New_Branch 						NGW					#
+::#               																	# 
+::################################################################################### 
  
 ::---------------- 
 ::-  VAR REGION  - 
