@@ -1,0 +1,227 @@
+#######################################
+#                                     #
+#  Internal Disk - OS (MSata Drive)   #
+#                                     #
+#######################################
+
+Device Name:      /dev/sda
+Device Model:     Samsung SSD 860 EVO mSATA 500GB
+Serial Number:    S41NNB0M300442Y
+LU WWN Device Id: 5 002538 e40e54a2c
+Firmware Version: RVT42B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      mSATA
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:15:04 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Internal Disk - Raid Drive #1      #
+#  Inside Tower of Desktop            #
+#                                     #
+#######################################
+
+Device Name:      /dev/sdb
+Model Family:     Western Digital Blue Mobile
+Device Model:     WDC WD5000LPVX-75V0TT0
+Serial Number:    WX41A93Y2980
+LU WWN Device Id: 5 0014ee 6ae9bbf66
+Firmware Version: 01.01A01
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Sizes:     512 bytes logical, 4096 bytes physical
+Rotation Rate:    5400 rpm
+Device is:        In smartctl database [for details use: -P show]
+ATA Version is:   ACS-2 (minor revision not indicated)
+SATA Version is:  SATA 3.0, 6.0 Gb/s (current: 3.0 Gb/s)
+Local Time is:    Sun Jun 16 03:18:14 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Internal Disk - Raid Drive #2      #
+#  Inside Tower of Desktop            #
+#                                     #
+#######################################
+
+Device Name:      /dev/sdc
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NY0M409901Z
+LU WWN Device Id: 5 002538 e0011f0da
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 3.0 Gb/s)
+Local Time is:    Sun Jun 16 03:19:49 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 1 Left 6              #
+#  6 Bay JBOD                         #
+#  Raid Drive #3                      #
+#                                     #
+#######################################
+
+Device Name:      /dev/sdf
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NB0M415019E
+LU WWN Device Id: 5 002538 e40f24341
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:22:47 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 1 Right               #
+#  6 Bay JBOD                         #
+#  Raid Drive #4                      #
+#                                     #
+#######################################
+
+Device Name:     /dev/sdd
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NB0M400032H
+LU WWN Device Id: 5 002538 e40f198a8
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:24:19 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 2 Left                #
+#  6 Bay JBOD                         #
+#  Raid Drive #5                      #
+#                                     #
+#######################################
+
+Device Name:      /dev/sdg
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NY0M409848V
+LU WWN Device Id: 5 002538 e0011f096
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:25:40 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 2 Right               #
+#  6 Bay JBOD                         #
+#  Raid Drive #6                      #
+#                                     #
+#######################################
+
+Device Name:     /dev/sde
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NB0M359713F
+LU WWN Device Id: 5 002538 e40db4bb5
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:27:03 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 3 Left                #
+#  6 Bay JBOD                         #
+#  Raid Drive #7                      #
+#                                     #
+#######################################
+
+Device Name:     /dev/sdh
+Device Model:     Samsung SSD 860 EVO 500GB
+Serial Number:    S3Z1NY0M409930W
+LU WWN Device Id: 5 002538 e0011f106
+Firmware Version: RVT02B6Q
+User Capacity:    500,107,862,016 bytes [500 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+Form Factor:      2.5 inches
+Device is:        Not in smartctl database [for details use: -P showall]
+ATA Version is:   Unknown(0x09fc), ACS-4 T13/BSR INCITS 529 revision 5
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Sun Jun 16 03:28:57 2019 UTC
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+#######################################
+#                                     #
+#  Ext Disk Row 3 Right               #
+#  6 Bay JBOD                         #
+#  Raid Drive #8                      #
+#                                     #
+#######################################
+
+
+
+
+
+
+
+
+#######################################
+#                                     #
+#  Ext Disk Row 1 Left                #
+#  2 Bay JBOD                         #
+#  Raid Drive #9                      #
+#                                     #
+#######################################
+
+
+
+
+
+
+
+
+
+#######################################
+#                                     #
+#  Ext Disk Row 1 Right               #
+#  2 Bay JBOD                         #
+#  Raid Drive #10                     #
+#                                     #
+#######################################
+
