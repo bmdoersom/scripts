@@ -3,7 +3,7 @@ SETLOCAL EnableDelayedExpansion
  
 ::################################################################################### 
 ::#               																	# 
-::# Filename:  getLoma.bat         													# 
+::# Filename:  gitstuff.bat        													# 
 ::#               																	# 
 ::# Description:  Configures the LOMA dev env for SW ENG 							# 
 ::#               																	# 
