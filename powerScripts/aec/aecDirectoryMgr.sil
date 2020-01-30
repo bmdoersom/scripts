@@ -1,0 +1,19 @@
+/* ---------------------------------------
+- Description: This script will create
+- the directory structure required for
+- AEC when a ITB is received.
+-
+- Developer: Brian Doersom
+-
+- Date: 29 January 2020
+-
+--------------------------------------*/
+
+//************
+//*** VARS ***
+//************
+
+date calendarYear = year(currentDate());
+string rootFolder = calendarYear + " - Quotes"
+
+

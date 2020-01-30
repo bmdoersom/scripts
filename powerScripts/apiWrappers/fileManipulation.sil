@@ -1,7 +1,5 @@
 /* ----------------------------------
--  Description: This script will be
--  inhertiable for logging actions
--  to flat files for easy debugging.
+-  Description: This script is a wrapper 
 -
 -  Developer: Brian M Doersom
 -
@@ -13,9 +11,7 @@
 //** VARS **
 //**********
 
-string logDir = /tmp/linuxLogger;
-date logDate = currentDate();
-string logFile = linuxLog + "_" + logDate;
+
 
 //***********
 //** FUNCS **
