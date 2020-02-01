@@ -12,8 +12,26 @@
 //************
 //*** VARS ***
 //************
+date currYear = year(currentDate());
+date currMonth = month(currentDate());
+string topLevelDir = currYear + " - Quotes";
 
-date calendarYear = year(currentDate());
-string rootFolder = calendarYear + " - Quotes"
 
+
+
+
+
+//*************
+//*** FUNCS ***
+//*************
+
+
+
+
+
+
+
+//************
+//*** MAIN ***
+//************
 
