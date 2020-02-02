@@ -12,26 +12,78 @@
 //************
 //*** VARS ***
 //************
-date currYear = year(currentDate());
-date currMonth = month(currentDate());
-string topLevelDir = currYear + " - Quotes";
 
+// Global String Definitions
+string currYear = year(currentDate());
+string currMonth = month(currentDate());
+string currYearQuoteDir = "/" + currYear + " - Quotes";
+string secondLvlDir = "currYear + currMonth";
+string logFile = "/tmp/logFile";
+string currDir;
+string baseDir = "/tmp";
+string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir;
 
+// Global Array Definitions
+string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
+string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
+string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
 
-
-
+// Global Number Definitions
+number folderIndex = size(keys);
 
 //*************
 //*** FUNCS ***
 //*************
 
+function estimateDirAction(){
 
+    // ForEach Loop to create the base
+    // directory structure for the 
+    // estimating process to take start
+    for(string topDir in #{topLvlDir}){
+       
+       currDir += topDir;
+       
+       if(!directoryExists(currDir)){
+       
+            createDirectory(currDir);
+       
+       } // End of check for Dir
+       
+    } // End of forEach Loop
+    
+} //End topLvlDirAction Func
 
+function customerDirAction(){
+    
+    
+    
+} //End of customerDirAction Func
 
-
-
+function quoteDirAction(){
+    
+    // ForEach Loop to create the dirs
+    // for artifact storage during the
+    // estimating process.
+    for(string qtDir in #{quoteDirs}){
+        
+        if(directoryExists(estimateDir)){
+            
+            string newDir = estimateDir + qtDir;
+            createDirectory(newDir);
+            
+        } // End of if statement
+        
+    } //End of forEach Loop
+    
+} //End of quoteDirAction Func
 
 //************
 //*** MAIN ***
 //************
+
+estimateDirAction();
+
+
+
 
