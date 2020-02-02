@@ -21,7 +21,7 @@ string secondLvlDir = "currYear + currMonth";
 string logFile = "/tmp/logFile";
 string currDir;
 string baseDir = "/tmp";
-string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir;
+string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir + "/";
 
 // Global Array Definitions
 string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
@@ -83,6 +83,7 @@ function quoteDirAction(){
 //************
 
 estimateDirAction();
+quoteDirAction();
 
 
 
