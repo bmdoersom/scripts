@@ -13,7 +13,6 @@
 //*** VARS ***
 //************
 
-// Global String Definitions
 string currYear = year(currentDate());
 string currMonth = month(currentDate());
 string currYearQuoteDir = "/" + currYear + " - Quotes";
@@ -23,20 +22,39 @@ string currDir;
 string baseDir = "/tmp";
 string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir + "/";
 
-// Global Array Definitions
 string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
 string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
-string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
 
-// Global Number Definitions
+string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
 number folderIndex = size(keys);
 
-string jobIterator = folderIndex;
-string custDir = currYear + currMonth + jobIterator + " " + summary;
+// Globally Defined VARs
+string custDirFQP;
 
 //*************
 //*** FUNCS ***
 //*************
+
+function configJobIndex(number jobCount){
+    
+    // Defined return Value
+    string configJobIndex;
+    
+    //End of 1-9 Case
+    if(jobCount < 10){
+        
+        configJobIndex = "00" + jobCount;
+    } // End of if for 1-9
+    
+    // End of 10-99 Case
+    if (jobCount > 10 && jobCount < 100 ){
+        
+        configJobIndex = "0" + jobCount;
+    } // End of if for 10-99
+    
+    return configJobIndex;
+    
+} //End of configJobIndex Func
 
 function estimateDirAction(){
 
@@ -59,8 +77,15 @@ function estimateDirAction(){
 
 function customerDirAction(){
 
-    string myNewDir = estimateDir + custDir;
-    createDirectory(myNewDir);
+    if(directoryExists(estimateDir)){
+    
+        string jobIterator = configJobIndex(folderIndex);
+        string custDir = currYear + currMonth + jobIterator + " " + summary;
+        custDirFQP = estimateDir + custDir;
+    
+        createDirectory(custDirFQP);
+        
+    } // End outer if statement
     
 } //End of customerDirAction Func
 
@@ -70,11 +95,11 @@ function quoteDirAction(){
     // for artifact storage during the
     // estimating process.
     for(string qtDir in #{quoteDirs}){
-        
-        if(directoryExists(estimateDir)){
+    
+        if(directoryExists(custDirFQP)){
             
-            string newDir = estimateDir + qtDir;
-            createDirectory(newDir);
+            string quoteDirFPQ = custDirFQP + qtDir;
+            createDirectory(quoteDirFPQ);
             
         } // End of if statement
         
@@ -86,9 +111,9 @@ function quoteDirAction(){
 //*** MAIN ***
 //************
 
-//estimateDirAction();
+estimateDirAction();
 customerDirAction();
-//quoteDirAction();
+quoteDirAction();
 
 
 
