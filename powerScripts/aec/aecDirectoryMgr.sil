@@ -31,6 +31,9 @@ string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' 
 // Global Number Definitions
 number folderIndex = size(keys);
 
+string jobIterator = folderIndex;
+string custDir = currYear + currMonth + jobIterator + " " + summary;
+
 //*************
 //*** FUNCS ***
 //*************
@@ -55,8 +58,9 @@ function estimateDirAction(){
 } //End topLvlDirAction Func
 
 function customerDirAction(){
-    
-    
+
+    string myNewDir = estimateDir + custDir;
+    createDirectory(myNewDir);
     
 } //End of customerDirAction Func
 
@@ -82,8 +86,9 @@ function quoteDirAction(){
 //*** MAIN ***
 //************
 
-estimateDirAction();
-quoteDirAction();
+//estimateDirAction();
+customerDirAction();
+//quoteDirAction();
 
 
 
