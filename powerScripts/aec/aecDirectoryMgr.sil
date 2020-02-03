@@ -6,7 +6,6 @@
 - Developer: Brian Doersom
 -
 - Date: 29 January 2020
--
 ----------------------------------------*/
 
 //************
@@ -21,9 +20,6 @@ string logFile = "/tmp/logFile";
 string currDir;
 string baseDir = "/tmp";
 string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir + "/";
-
-string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
-string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
 
 string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
 number folderIndex = size(keys);
@@ -58,6 +54,8 @@ function configJobIndex(number jobCount){
 
 function estimateDirAction(){
 
+    string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
+
     // ForEach Loop to create the base
     // directory structure for the 
     // estimating process to take start
@@ -90,6 +88,8 @@ function customerDirAction(){
 } //End of customerDirAction Func
 
 function quoteDirAction(){
+    
+    string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
     
     // ForEach Loop to create the dirs
     // for artifact storage during the
