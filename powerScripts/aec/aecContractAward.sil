@@ -1,0 +1,120 @@
+/* ---------------------------------------
+- Description: This script will create
+- the directory structure required for
+- AEC when a ITB is awarded on contract
+-
+- Developer: Brian Doersom
+-
+- Date: 3 February 2020
+----------------------------------------*/
+
+//************
+//*** VARS ***
+//************
+
+string currYear = year(currentDate());
+string currMonth = month(currentDate());
+string currYearQuoteDir = "/" + currYear + " - Quotes";
+string secondLvlDir = "currYear + currMonth";
+string logFile = "/tmp/logFile";
+string currDir;
+string baseDir = "/tmp";
+string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir + "/";
+
+string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
+number folderIndex = size(keys);
+
+// Globally Defined VARs
+string custDirFQP;
+
+//*************
+//*** FUNCS ***
+//*************
+
+function configJobIndex(number jobCount){
+    
+    // Defined return Value
+    string configJobIndex;
+    
+    //End of 1-9 Case
+    if(jobCount < 10){
+        
+        configJobIndex = "00" + jobCount;
+    } // End of if for 1-9
+    
+    // End of 10-99 Case
+    if (jobCount > 10 && jobCount < 100 ){
+        
+        configJobIndex = "0" + jobCount;
+    } // End of if for 10-99
+    
+    return configJobIndex;
+    
+} //End of configJobIndex Func
+
+function estimateDirAction(){
+
+    string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
+
+    // ForEach Loop to create the base
+    // directory structure for the 
+    // estimating process to take start
+    for(string topDir in #{topLvlDir}){
+       
+       currDir += topDir;
+       
+       if(!directoryExists(currDir)){
+       
+            createDirectory(currDir);
+       
+       } // End of check for Dir
+       
+    } // End of forEach Loop
+    
+} //End topLvlDirAction Func
+
+function customerDirAction(){
+
+    if(directoryExists(estimateDir)){
+    
+        string jobIterator = configJobIndex(folderIndex);
+        string custDir = currYear + currMonth + jobIterator + " " + summary;
+        custDirFQP = estimateDir + custDir;
+    
+        createDirectory(custDirFQP);
+        
+    } // End outer if statement
+    
+} //End of customerDirAction Func
+
+function quoteDirAction(){
+    
+    string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
+    
+    // ForEach Loop to create the dirs
+    // for artifact storage during the
+    // estimating process.
+    for(string qtDir in #{quoteDirs}){
+    
+        if(directoryExists(custDirFQP)){
+            
+            string quoteDirFPQ = custDirFQP + qtDir;
+            createDirectory(quoteDirFPQ);
+            
+        } // End of if statement
+        
+    } //End of forEach Loop
+    
+} //End of quoteDirAction Func
+
+//************
+//*** MAIN ***
+//************
+
+estimateDirAction();
+customerDirAction();
+quoteDirAction();
+
+
+
+
