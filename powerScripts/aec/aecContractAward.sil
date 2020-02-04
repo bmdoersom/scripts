@@ -13,107 +13,114 @@
 //************
 
 string currYear = year(currentDate());
-string currMonth = month(currentDate());
-string currYearQuoteDir = "/" + currYear + " - Quotes";
-string secondLvlDir = "currYear + currMonth";
-string logFile = "/tmp/logFile";
-string currDir;
+string currYearAwardDir = "/" + currYear;
+string jobDir = customfield_10301;
 string baseDir = "/tmp";
-string estimateDir = baseDir + "/Estimating/Quotes/" + currYearQuoteDir + "/";
+string dirFQP = baseDir;
+string [] awardedContractDir = {"/AWARDED SALES CONTRACTS", currYearAwardDir};
+string contractDirFQP = "/tmp/AWARDED SALES CONTRACTS/" + currYear;
 
-string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
-number folderIndex = size(keys);
-
-// Globally Defined VARs
-string custDirFQP;
+// SysMsg Definitions
+string createDirSuccessMsg = "SysMsg_S001: Successfully created " + "[" + contractDirFQP + "]" + " directory.";
+string createDirFailMsg = "SysMsg_F001: Failed to create " + "[" + contractDirFQP + "]" + " directory.";
+string mvDirSuccessMsg = "SysMsg_S002: Successfully moved the " + "[" + jobDir + "]" + " directory contents.";
+string mvDirFailMsg = "SysMsg_F002: Failed to move the " + "[" + jobDir + "]" + " directory contents.";
 
 //*************
 //*** FUNCS ***
 //*************
 
-function configJobIndex(number jobCount){
+function awardedDirAction(){
     
-    // Defined return Value
-    string configJobIndex;
+    number awardedDirExitCode;
     
-    //End of 1-9 Case
-    if(jobCount < 10){
-        
-        configJobIndex = "00" + jobCount;
-    } // End of if for 1-9
+    // Check for the Contracted Awarded Directory Structure
+    if(!directoryExists(contractDirFQP)){
     
-    // End of 10-99 Case
-    if (jobCount > 10 && jobCount < 100 ){
-        
-        configJobIndex = "0" + jobCount;
-    } // End of if for 10-99
-    
-    return configJobIndex;
-    
-} //End of configJobIndex Func
-
-function estimateDirAction(){
-
-    string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
-
-    // ForEach Loop to create the base
-    // directory structure for the 
-    // estimating process to take start
-    for(string topDir in #{topLvlDir}){
-       
-       currDir += topDir;
-       
-       if(!directoryExists(currDir)){
-       
-            createDirectory(currDir);
-       
-       } // End of check for Dir
-       
-    } // End of forEach Loop
-    
-} //End topLvlDirAction Func
-
-function customerDirAction(){
-
-    if(directoryExists(estimateDir)){
-    
-        string jobIterator = configJobIndex(folderIndex);
-        string custDir = currYear + currMonth + jobIterator + " " + summary;
-        custDirFQP = estimateDir + custDir;
-    
-        createDirectory(custDirFQP);
-        
-    } // End outer if statement
-    
-} //End of customerDirAction Func
-
-function quoteDirAction(){
-    
-    string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
-    
-    // ForEach Loop to create the dirs
-    // for artifact storage during the
-    // estimating process.
-    for(string qtDir in #{quoteDirs}){
-    
-        if(directoryExists(custDirFQP)){
+        // Create the base directory struct if non-existent
+        for(string awardDir in #{awardedContractDir}){
+                
+            dirFQP += awardDir;
             
-            string quoteDirFPQ = custDirFQP + qtDir;
-            createDirectory(quoteDirFPQ);
-            
-        } // End of if statement
+            if(!directoryExists(dirFQP)){
+               
+                createDirectory(dirFQP);
+               
+            } //End of nested if statement
+             
+        } // End of For Loop
         
-    } //End of forEach Loop
+        // If the Contracted Awarded Directory Structure
+        // failed to create.
+        if(!directoryExists(contractDirFQP)){
+            
+            awardedDirExitCode = 1;
+            
+        } else {
+        
+            awardedDirExitCode = 0;
+            
+        } // End of nested else statement
+        
+    } //End of if statement
     
-} //End of quoteDirAction Func
+    return awardedDirExitCode;
+    
+} // End of awardedDirAction() Func
+
+function jobDirMove(){
+
+    number jobDirMoveExitCode;
+    
+    if(directoryExists(jobDir)){
+        
+        string [] sysRet = system("/usr/bin/bash /tmp/helloWorld.sh");
+        
+        // Create system call to move directory in place
+        if (sysRet[0] == "0.0"){
+            
+            jobDirMoveExitCode = 0;
+            
+        } else {
+            
+            jobDirMoveExitCode = 1;
+            
+        }
+        
+    } else {
+        
+        jobDirMoveExitCode = 1;
+        
+    }
+    
+    return jobDirMoveExitCode;
+        
+} //End of jobDirMove() Func
 
 //************
 //*** MAIN ***
 //************
 
-estimateDirAction();
-customerDirAction();
-quoteDirAction();
+if (awardedDirAction() == 0){
+
+    addComment(key, currentUser(), createDirSuccessMsg);
+    
+    if (jobDirMove() == 0) {
+        
+        addComment(key, currentUser(), mvDirSuccessMsg);
+        
+    } else {
+        
+        addComment(key, currentUser(), mvDirFailMsg);
+        
+    }
+    
+} else {
+    
+    addComment(key, currentUser(), createDirFailMsg);
+    
+}// End of if statement
+
 
 
 
