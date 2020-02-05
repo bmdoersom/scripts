@@ -17,17 +17,13 @@ string currYearAwardDir = "/" + currYear;
 string jobDir = customfield_10301;
 string baseDir = "/tmp";
 string dirFQP = baseDir;
-string [] awardedContractDir = {"/AWARDED SALES CONTRACTS", currYearAwardDir};
-string contractDirFQP = "/tmp/AWARDED SALES CONTRACTS/" + currYear;
-string originalBidDocDir = "/12.OriginalBidDocuments/";
+string [] awardedContractDir = {"/AwardedSalesContracts/", currYearAwardDir};
+string contractDirFQP = "/tmp/AwardedSalesContracts/" + currYear;
+string originalBidDocDir = "/12.OriginalBidDocuments";
 
 // SysMsg Definitions
-string createDirSuccessMsg = "SysMsg_S001: Successfully created " + "[" + contractDirFQP + "]" + " directory.";
-string createDirFailMsg = "SysMsg_F001: Failed to create " + "[" + contractDirFQP + "]" + " directory.";
-string mvDirSuccessMsg = "SysMsg_S002: Successfully moved the " + "[" + jobDir + "]" + " directory contents.";
-string mvDirFailMsg = "SysMsg_F002: Failed to move the " + "[" + jobDir + "]" + " directory contents.";
-string quoteDirActionSuccessMsg = "SysMsg_S003: Successfully configured the quote directory for awarded status.";
-string quoteDirActionFailMsg = "SysMsg_F003: Failed to configure the quote directory for awarded status.";
+string contractAwardSuccessMsg = "SysMsg_S003: Successfully created " + "[" + contractDirFQP + "]" + " directory.";
+string contractAwardFailMsg = "SysMsg_F004: Failed to create " + "[" + contractDirFQP + "]" + " directory.";
 
 //*************
 //*** FUNCS ***
@@ -95,68 +91,112 @@ function quoteDirAction(){
     
 } // End quoteDirAction() function
 
-function jobDirMove(){
+function compileDirs(){
 
-    number jobDirMoveExitCode;
+    number compileDirsExitCode;
     
     if(directoryExists(jobDir)){
         
-        string [] sysRet = system("/usr/bin/bash /tmp/helloWorld.sh " + jobDir);
-        
+        string [] sysRet = system("/usr/bin/bash /tmp/compileDirs.sh " + jobDir);
+
         // Create system call to move directory in place
         if (sysRet[0] == "0.0"){
             
-            jobDirMoveExitCode = 0;
+            string [] awardedDirs = {"/1.Contract", "/2.Insurance", "/3.Estimates", "/4.RequestedChangeOrders", 
+            "/5.ExecutedCOs", "/6.RFIS_PCRs_ASIs", "/7.Subcontracts&POs", "/8.Submittals", "/9.Schedule", "/10.Pics", 
+            "/11.CloseoutDocuments", "/13.FieldUseDrawings", "/14.ShopDrawingsInProcess"};
             
+            for(string addedDir in #{awardedDirs}){
+                
+                string jobDirFQP = jobDir + "/";
+                jobDirFQP += addedDir;
+            
+                if(!directoryExists(jobDirFQP)){
+               
+                    createDirectory(jobDirFQP);
+                    
+                }
+               
+            } //End of nested if statement
+            
+            compileDirsExitCode = 0;
+             
         } else {
             
-            jobDirMoveExitCode = 1;
+            compileDirsExitCode = 1;
             
         }
         
     } else {
         
-        jobDirMoveExitCode = 1;
+        compileDirsExitCode = 1;
         
     }
     
-    return jobDirMoveExitCode;
+    return compileDirsExitCode;
         
-} //End of jobDirMove() Func
+} //End of compileDirs() Func
+
+function moveDirs(){
+
+    string moveDirsExitCode;
+    
+    string [] mvRet = system("/usr/bin/bash /tmp/moveDirs.sh " + jobDir);
+            
+    if (mvRet[0] == "0.0"){
+                
+        moveDirsExitCode = 0;
+                
+    } else {
+                
+        moveDirsExitCode = 1;
+                
+    } // End of else statement
+    
+} // End of moveDirs Func
 
 //************
 //*** MAIN ***
 //************
 
-if (awardedDirAction() == 0){
-
-    addComment(key, currentUser(), createDirSuccessMsg);
+if (awardedDirAction() == 0)
+{
     
-    if (quoteDirAction() == 0) {
-    
-        addComment(key, currentUser(), quoteDirActionSuccessMsg);
+    if (quoteDirAction() == 0)
+    {
         
-        //if (jobDirMove() == 0) {
-        
-          //  addComment(key, currentUser(), mvDirSuccessMsg);
-        
-        //} else {
-        
-          //  addComment(key, currentUser(), mvDirFailMsg);
-        
-        //}
+        if(compileDirs() == 0)
+        {
+            
+            if(moveDirs() == 0)
+            {
+                
+                addComment(key, currentUser(), contractAwardSuccessMsg);
+                
+            } else {
+                
+                addComment(key, currentIssue(), contractAwardFailMsg);
+                
+            } // End of else statement
+            
+        } else {
+            
+            addComment(key, currentIssue(), contractAwardFailMsg);
+            
+        } // End of else statement
         
     } else {
         
-        addComment(key, currentUser(), quoteDirActionFailMsg);
+        addComment(key, currentIssue(), contractAwardFailMsg);
         
-    }
+    } // End of else statement
     
 } else {
     
-    addComment(key, currentUser(), createDirFailMsg);
-    
-}// End of if statement
+    addComment(key, currentIssue(), contractAwardFailMsg);
+
+} // End of else statement
+
 
 
 

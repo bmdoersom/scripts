@@ -40,12 +40,14 @@ function configJobIndex(number jobCount){
     if(jobCount < 10){
         
         configJobIndex = "00" + jobCount;
+        
     } // End of if for 1-9
     
     // End of 10-99 Case
     if (jobCount > 10 && jobCount < 100 ){
         
         configJobIndex = "0" + jobCount;
+        
     } // End of if for 10-99
     
     return configJobIndex;
