@@ -19,12 +19,15 @@ string baseDir = "/tmp";
 string dirFQP = baseDir;
 string [] awardedContractDir = {"/AWARDED SALES CONTRACTS", currYearAwardDir};
 string contractDirFQP = "/tmp/AWARDED SALES CONTRACTS/" + currYear;
+string originalBidDocDir = "/12.OriginalBidDocuments/";
 
 // SysMsg Definitions
 string createDirSuccessMsg = "SysMsg_S001: Successfully created " + "[" + contractDirFQP + "]" + " directory.";
 string createDirFailMsg = "SysMsg_F001: Failed to create " + "[" + contractDirFQP + "]" + " directory.";
 string mvDirSuccessMsg = "SysMsg_S002: Successfully moved the " + "[" + jobDir + "]" + " directory contents.";
 string mvDirFailMsg = "SysMsg_F002: Failed to move the " + "[" + jobDir + "]" + " directory contents.";
+string quoteDirActionSuccessMsg = "SysMsg_S003: Successfully configured the quote directory for awarded status.";
+string quoteDirActionFailMsg = "SysMsg_F003: Failed to configure the quote directory for awarded status.";
 
 //*************
 //*** FUNCS ***
@@ -68,13 +71,37 @@ function awardedDirAction(){
     
 } // End of awardedDirAction() Func
 
+function quoteDirAction(){
+    
+    number quoteDirActionExitCode;
+    
+    if(directoryExists(jobDir)){
+        
+        string bidDocDir = jobDir + originalBidDocDir;
+        
+        if (createDirectory(bidDocDir)) {
+            
+            quoteDirActionExitCode = 0;
+            
+        } else {
+            
+            quoteDirActionExitCode = 1;
+            
+        }// End if Statement
+        
+    } // End outer if statement
+    
+    return quoteDirActionExitCode;
+    
+} // End quoteDirAction() function
+
 function jobDirMove(){
 
     number jobDirMoveExitCode;
     
     if(directoryExists(jobDir)){
         
-        string [] sysRet = system("/usr/bin/bash /tmp/helloWorld.sh");
+        string [] sysRet = system("/usr/bin/bash /tmp/helloWorld.sh " + jobDir);
         
         // Create system call to move directory in place
         if (sysRet[0] == "0.0"){
@@ -105,13 +132,23 @@ if (awardedDirAction() == 0){
 
     addComment(key, currentUser(), createDirSuccessMsg);
     
-    if (jobDirMove() == 0) {
+    if (quoteDirAction() == 0) {
+    
+        addComment(key, currentUser(), quoteDirActionSuccessMsg);
         
-        addComment(key, currentUser(), mvDirSuccessMsg);
+        //if (jobDirMove() == 0) {
+        
+          //  addComment(key, currentUser(), mvDirSuccessMsg);
+        
+        //} else {
+        
+          //  addComment(key, currentUser(), mvDirFailMsg);
+        
+        //}
         
     } else {
         
-        addComment(key, currentUser(), mvDirFailMsg);
+        addComment(key, currentUser(), quoteDirActionFailMsg);
         
     }
     

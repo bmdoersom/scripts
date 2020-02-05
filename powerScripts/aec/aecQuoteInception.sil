@@ -14,7 +14,7 @@
 
 string currYear = year(currentDate());
 string currMonth = month(currentDate());
-string currYearQuoteDir = "/" + currYear + " - Quotes";
+string currYearQuoteDir = "/" + currYear + "-Quotes";
 string secondLvlDir = "currYear + currMonth";
 string logFile = "/tmp/logFile";
 string currDir;
@@ -78,7 +78,7 @@ function customerDirAction(){
     if(directoryExists(estimateDir)){
     
         string jobIterator = configJobIndex(folderIndex);
-        string custDir = currYear + currMonth + jobIterator + " " + summary;
+        string custDir = currYear + currMonth + jobIterator + "_" + summary;
         custDirFQP = estimateDir + custDir;
     
         createDirectory(custDirFQP);
@@ -95,7 +95,7 @@ function customerDirAction(){
 
 function quoteDirAction(){
     
-    string [] quoteDirs = {"/1.Plans & Addenda", "/2.Specs", "/3.Project Photos", "/4.Estimate Packages", "/5.Proposal & Bid", "/6.General & Emails"};
+    string [] quoteDirs = {"/1.Plans&Addenda", "/2.Specs", "/3.ProjectPhotos", "/4.EstimatePackages", "/5.Proposal&Bid", "/6.General&Emails"};
     
     // ForEach Loop to create the dirs
     // for artifact storage during the
