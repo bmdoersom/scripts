@@ -24,8 +24,11 @@ string estimateDir = baseDir + "/Estimating/Quotes" + currYearQuoteDir + "/";
 string [] keys = selectIssues("Project = 'AEC SALES' and issuetype = 'AEC: JOB' and createdDate >= startOfMonth() ORDER By Rank DESC");
 number folderIndex = size(keys);
 
-// Globally Defined VARs
 string custDirFQP;
+
+// SysMsg Definitions
+string quoteSuccessMsg = "SysMsg_S001: Successfully created quote folder structure.";
+string quoteFailMsg = "SysMsg_F001: Failed to create quote folder structure.";
 
 //*************
 //*** FUNCS ***
@@ -56,6 +59,7 @@ function configJobIndex(number jobCount){
 
 function estimateDirAction(){
 
+    string estimateDirActionExitCode;
     string [] topLvlDir = {baseDir, "/Estimating", "/Quotes", currYearQuoteDir};
 
     // ForEach Loop to create the base
@@ -67,15 +71,31 @@ function estimateDirAction(){
        
        if(!directoryExists(currDir)){
        
-            createDirectory(currDir);
+            if(createDirectory(currDir)){
+                
+                estimateDirActionExitCode = 0;
+                
+            } else {
+                
+                estimateDirActionExitCode = 1;  
+                
+            } // End of nested else statement
        
+       } else {
+           
+           estimateDirActionExitCode = 1;
+           
        } // End of check for Dir
        
     } // End of forEach Loop
     
+    return estimateDirActionExitCode;
+    
 } //End topLvlDirAction Func
 
 function customerDirAction(){
+
+    string customerDirActionExitCode;
 
     if(directoryExists(estimateDir)){
     
@@ -83,20 +103,36 @@ function customerDirAction(){
         string custDir = currYear + currMonth + jobIterator + "_" + summary;
         custDirFQP = estimateDir + custDir;
     
-        createDirectory(custDirFQP);
+        if(createDirectory(custDirFQP))
+        {
+            
+            // Lets update the issueScreen custom field 
+            // to use when moving to new directory if
+            // contract is award from ITB execution.
+            string jobQuoteDir = "customfield_10301";
+            %jobQuoteDir% = custDirFQP;
         
-        // Lets update the issueScreen custom field 
-        // to use when moving to new directory if
-        // contract is award from ITB execution.
-        string jobQuoteDir = "customfield_10301";
-        %jobQuoteDir% = custDirFQP;
+            customerDirActionExitCode = 0;
+            
+        } else {
+            
+            customerDirActionExitCode = 1;
+                
+        } // End of nested else statement
         
-    } // End outer if statement
+    } else {
+        
+        customerDirActionExitCode = 1;
+        
+    } // End outer else statement'
+    
+    return customerDirActionExitCode;
     
 } //End of customerDirAction Func
 
 function quoteDirAction(){
-    
+
+    string quoteDirActionExitCode;
     string [] quoteDirs = {"/1.Plans&Addenda", "/2.Specs", "/3.ProjectPhotos", "/4.EstimatePackages", "/5.Proposal&Bid", "/6.General&Emails"};
     
     // ForEach Loop to create the dirs
@@ -107,11 +143,26 @@ function quoteDirAction(){
         if(directoryExists(custDirFQP)){
             
             string quoteDirFPQ = custDirFQP + qtDir;
-            createDirectory(quoteDirFPQ);
+            
+            if(createDirectory(quoteDirFPQ)){
+                
+                quoteDirActionExitCode = 0;
+                
+            } else {
+                
+                quoteDirActionExitCode = 1;
+                
+            } // End of nested else statement
+            
+        } else {
+            
+            quoteDirActionExitCode = 1;
             
         } // End of if statement
         
     } //End of forEach Loop
+    
+    return quoteDirActionExitCode;
     
 } //End of quoteDirAction Func
 
@@ -119,9 +170,38 @@ function quoteDirAction(){
 //*** MAIN ***
 //************
 
-estimateDirAction();
-customerDirAction();
-quoteDirAction();
+//estimateDirAction();
+//customerDirAction();
+//quoteDirAction();
+
+if (estimateDirAction() == 0)
+{
+    
+    if (customerDirAction() == 0)
+    {
+        
+        if (quoteDirAction() == 0)
+        {
+            
+            addComment(key, currentUser(), quoteSuccessMsg);
+            
+        } else {
+            
+            addComment(key, currentUser(), quoteFailMsg);
+            
+        } // End quoteDirAction Else Statement
+        
+    } else {
+        
+        addComment(key, currentUser(), quoteFailMsg);
+        
+    } // End customerDirAction Else Statement
+    
+} else {
+    
+    addComment(key, currentUser(), quoteFailMsg);
+    
+} //End estimateDirAction Else Statement
 
 
 

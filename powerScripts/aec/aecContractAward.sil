@@ -22,8 +22,8 @@ string contractDirFQP = "/tmp/AwardedSalesContracts/" + currYear;
 string originalBidDocDir = "/12.OriginalBidDocuments";
 
 // SysMsg Definitions
-string contractAwardSuccessMsg = "SysMsg_S003: Successfully created " + "[" + contractDirFQP + "]" + " directory.";
-string contractAwardFailMsg = "SysMsg_F004: Failed to create " + "[" + contractDirFQP + "]" + " directory.";
+string contractAwardSuccessMsg = "SysMsg_S002: Successfully processed contract award folder structure.";
+string contractAwardFailMsg = "SysMsg_F002: Failed to process the contract awarded folder structure.";
 
 //*************
 //*** FUNCS ***
@@ -153,6 +153,8 @@ function moveDirs(){
                 
     } // End of else statement
     
+    return moveDirsExitCode;
+    
 } // End of moveDirs Func
 
 //************
@@ -175,25 +177,25 @@ if (awardedDirAction() == 0)
                 
             } else {
                 
-                addComment(key, currentIssue(), contractAwardFailMsg);
+                addComment(key, currentUser(), contractAwardFailMsg);
                 
             } // End of else statement
             
         } else {
             
-            addComment(key, currentIssue(), contractAwardFailMsg);
+            addComment(key, currentUser(), contractAwardFailMsg);
             
         } // End of else statement
         
     } else {
         
-        addComment(key, currentIssue(), contractAwardFailMsg);
+        addComment(key, currentUser(), contractAwardFailMsg);
         
     } // End of else statement
     
 } else {
     
-    addComment(key, currentIssue(), contractAwardFailMsg);
+    addComment(key, currentUser(), contractAwardFailMsg);
 
 } // End of else statement
 
