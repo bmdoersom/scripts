@@ -14,7 +14,6 @@
 
 string currYear = year(currentDate());
 string currYearAwardDir = "/" + currYear;
-string jobDir = customfield_10301;
 string baseDir = "/tmp";
 string dirFQP = baseDir;
 string [] awardedContractDir = {"/AwardedSalesContracts/", currYearAwardDir};
@@ -24,6 +23,7 @@ string originalBidDocDir = "/12.OriginalBidDocuments";
 // SysMsg Definitions
 string contractAwardSuccessMsg = "SysMsg_S002: Successfully processed contract award folder structure.";
 string contractAwardFailMsg = "SysMsg_F002: Failed to process the contract awarded folder structure.";
+string myJobDir = customfield_10401;
 
 //*************
 //*** FUNCS ***
@@ -61,7 +61,11 @@ function awardedDirAction(){
             
         } // End of nested else statement
         
-    } //End of if statement
+    } else {
+        
+        awardedDirExitCode = 0;
+        
+    }//End of if statement
     
     return awardedDirExitCode;
     
@@ -70,13 +74,14 @@ function awardedDirAction(){
 function quoteDirAction(){
     
     number quoteDirActionExitCode;
+
+    if(directoryExists(myJobDir))
+    {
     
-    if(directoryExists(jobDir)){
-        
-        string bidDocDir = jobDir + originalBidDocDir;
+        string bidDocDir = myJobDir + originalBidDocDir;
         
         if (createDirectory(bidDocDir)) {
-            
+        
             quoteDirActionExitCode = 0;
             
         } else {
@@ -95,7 +100,7 @@ function compileDirs(){
 
     number compileDirsExitCode;
     
-    if(directoryExists(jobDir)){
+    if(directoryExists(myJobDir)){
         
         string [] sysRet = system("/usr/bin/bash /tmp/compileDirs.sh " + jobDir);
 
@@ -108,7 +113,7 @@ function compileDirs(){
             
             for(string addedDir in #{awardedDirs}){
                 
-                string jobDirFQP = jobDir + "/";
+                string jobDirFQP = myJobDir + "/";
                 jobDirFQP += addedDir;
             
                 if(!directoryExists(jobDirFQP)){
@@ -161,6 +166,12 @@ function moveDirs(){
 //*** MAIN ***
 //************
 
+/*awardedDirAction();
+quoteDirAction();
+compileDirs();
+moveDirs();
+*/
+
 if (awardedDirAction() == 0)
 {
     
@@ -177,28 +188,27 @@ if (awardedDirAction() == 0)
                 
             } else {
                 
-                addComment(key, currentUser(), contractAwardFailMsg);
+                addComment(key, currentUser(), "Move Dirs broke me");
                 
             } // End of else statement
             
         } else {
             
-            addComment(key, currentUser(), contractAwardFailMsg);
+            addComment(key, currentUser(), "Compile Dirs broke me");
             
         } // End of else statement
         
     } else {
         
-        addComment(key, currentUser(), contractAwardFailMsg);
+        addComment(key, currentUser(), "Quote Dir Action Broke Me");
         
     } // End of else statement
     
 } else {
     
-    addComment(key, currentUser(), contractAwardFailMsg);
+    addComment(key, currentUser(), "Award Dir Action Broke Me");
 
 } // End of else statement
-
 
 
 

@@ -83,7 +83,7 @@ function estimateDirAction(){
        
        } else {
            
-           estimateDirActionExitCode = 1;
+           estimateDirActionExitCode = 0;
            
        } // End of check for Dir
        
@@ -109,7 +109,7 @@ function customerDirAction(){
             // Lets update the issueScreen custom field 
             // to use when moving to new directory if
             // contract is award from ITB execution.
-            string jobQuoteDir = "customfield_10301";
+            string jobQuoteDir = "customfield_10401";
             %jobQuoteDir% = custDirFQP;
         
             customerDirActionExitCode = 0;
@@ -170,10 +170,6 @@ function quoteDirAction(){
 //*** MAIN ***
 //************
 
-//estimateDirAction();
-//customerDirAction();
-//quoteDirAction();
-
 if (estimateDirAction() == 0)
 {
     
@@ -187,19 +183,19 @@ if (estimateDirAction() == 0)
             
         } else {
             
-            addComment(key, currentUser(), quoteFailMsg);
+            addComment(key, currentUser(), "Quote Dir Action broke me");
             
         } // End quoteDirAction Else Statement
         
     } else {
         
-        addComment(key, currentUser(), quoteFailMsg);
+        addComment(key, currentUser(), "Customer Dir Action broke me");
         
     } // End customerDirAction Else Statement
     
 } else {
     
-    addComment(key, currentUser(), quoteFailMsg);
+    addComment(key, currentUser(), "Estimate Dir Action broke me");
     
 } //End estimateDirAction Else Statement
 
