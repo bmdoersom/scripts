@@ -166,12 +166,6 @@ function moveDirs(){
 //*** MAIN ***
 //************
 
-/*awardedDirAction();
-quoteDirAction();
-compileDirs();
-moveDirs();
-*/
-
 if (awardedDirAction() == 0)
 {
     
@@ -188,25 +182,25 @@ if (awardedDirAction() == 0)
                 
             } else {
                 
-                addComment(key, currentUser(), "Move Dirs broke me");
+                addComment(key, currentUser(), contractAwardFailMsg);
                 
             } // End of else statement
             
         } else {
             
-            addComment(key, currentUser(), "Compile Dirs broke me");
+            addComment(key, currentUser(), contractAwardFailMsg);
             
         } // End of else statement
         
     } else {
         
-        addComment(key, currentUser(), "Quote Dir Action Broke Me");
+        addComment(key, currentUser(), contractAwardFailMsg);
         
     } // End of else statement
     
 } else {
     
-    addComment(key, currentUser(), "Award Dir Action Broke Me");
+    addComment(key, currentUser(), contractAwardFailMsg);
 
 } // End of else statement
 

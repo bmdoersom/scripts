@@ -183,19 +183,19 @@ if (estimateDirAction() == 0)
             
         } else {
             
-            addComment(key, currentUser(), "Quote Dir Action broke me");
+            addComment(key, currentUser(), quoteFailMsg);
             
         } // End quoteDirAction Else Statement
         
     } else {
         
-        addComment(key, currentUser(), "Customer Dir Action broke me");
+        addComment(key, currentUser(), quoteFailMsg);
         
     } // End customerDirAction Else Statement
     
 } else {
     
-    addComment(key, currentUser(), "Estimate Dir Action broke me");
+    addComment(key, currentUser(), quoteFailMsg);
     
 } //End estimateDirAction Else Statement
 
