@@ -24,6 +24,7 @@ foreach($line in Get-Content $fileToBill)
 	
 	}
 	
+	#Logic to check for ')'
 	$closeParenIndex = $myString.IndexOf(")") 
 	if ($closeParenIndex -ne -1) {
 	
